@@ -1,0 +1,84 @@
+<script>
+	/* Most common syllabes in English language */
+	const syllabes = [
+		'a', 'e', 'i', 'o', 'u', 'y', 
+		'the', 'ing', 'er',  'ly', 'ed', 'es', 're', 'tion', 'in', 'con',  'ter', 'ex', 'al', 'de', 'com',  'di', 'en', 'an', 'ty', 'ry', 'ish',
+		'ti', 'ri', 'be', 'per', 'to', 'pro', 'ac', 'ad', 'ar', 'ers', 'ment', 'or', 'tions', 'ble', 'der', 'ma', 'na', 'si', 'un', 'at', 'dis', 'ca', 'cal', 'man', 'ap',
+		'po', 'sion', 'vi', 'el', 'est', 'la', 'lar', 'pa', 'ture', 'for', 'is', 'mer', 'pe', 'ra', 'so', 'ta', 'as', 'col', 'fi', 'ful', 'get', 'low', 'ni', 'par', 'son',
+		'tle', 'day', 'ny', 'pen', 'pre', 'tive', 'car', 'ci', 'mo', 'an', 'aus', 'pi', 'se', 'ten', 'tor', 'ver', 'ber', 'can', 'dy', 'et', 'it', 'mu', 'no', 'ple', 'cu',
+		'fac', 'fer', 'gen', 'ic', 'land', 'ob', 'of', 'pos', 'tain', 'den',  'mag', 'ments', 'set', 'some', 'sub', 'sur', 'ters', 'tu', 'af', 'au', 'cy', 'fa', 'im',
+		'li', 'lo', 'men', 'min', 'mon', 'op', 'out', 'rec', 'ro', 'sen', 'side', 'tal', 'tic', 'ties', 'ward', 'age', 'ba', 'but', 'cit', 'cle', 'co', 'cov', 'qu', 'dif', 'ence',
+		'ern', 'eve', 'hap', 'ies', 'ket', 'lec', 'main', 'mar', 'mis', 'my', 'nal', 'ness', 'nu', 'oc', 'pres', 'sup', 'te', 'ted', 'tem', 'tin', 'tri', 'tro', 'up',
+	];
+
+	function tooFake(word, syllable) {
+		if (word.length == 0) {
+			switch(syllable) {
+				case 'ish': return true;
+				case 'ies': return true;
+				case 'tle': return true;
+				case 'ing': return true;
+				case 'ness': return true;
+				case 'ence': return true;
+				case 'ties': return true;
+				case 'tion': return true;
+				case 'sion': return true;
+				case 'tions': return true;
+				case 'tive': return true;
+			}
+			if (syllable.charAt(0) == 'y') return true;
+			if (syllable.charAt(0) == 'u') return true;
+		}
+		else {
+			const lastSyllable = word[word.length - 1];
+			const lastChar = lastSyllable.charAt(lastSyllable.length - 1);
+			const firstChar = syllable.charAt(0);
+
+			if (lastChar == firstChar) return true;
+
+			if (lastSyllable.includes('y') && syllable.includes('y')) return true;
+			if (lastSyllable.includes('e') && syllable.includes('e')) return true;
+			if (lastSyllable.includes('i') && syllable.includes('i')) return true;
+			if (lastSyllable.includes('u') && syllable.includes('u')) return true;
+
+			if ((lastSyllable.includes('y') && syllable.includes('i')) ||
+				(lastSyllable.includes('i') && syllable.includes('y'))) return true;
+			if ((lastSyllable.includes('e') && syllable.includes('i')) || 
+				(lastSyllable.includes('i') && syllable.includes('e'))) return true;
+			if ((lastSyllable.includes('e') && syllable.includes('y')) || 
+				(lastSyllable.includes('y') && syllable.includes('e'))) return true;
+
+			if ((lastChar == 'm' && firstChar == 'd') || (lastChar == 'm' && firstChar == 'd')) return true;
+			if ((lastChar == 'm' && firstChar == 'f') || (lastChar == 'm' && firstChar == 'f')) return true;
+			if ((lastChar == 'p' && firstChar == 'f') || (lastChar == 'p' && firstChar == 'f')) return true;
+
+			if (lastSyllable == syllable) return true;
+		}
+		return false;
+	}
+
+	function getWord(min, max) {
+		// var length = wordLengths[Math.floor(Math.random() * 16)];
+		// if (min && (length < min)) length = min;
+		// if (max && (length > max)) length = max;
+		var word = [];
+
+		while (word.join('').length < max) {
+			//var count = syllabeCounts[Math.floor(Math.random() * 16)];
+			var count = syllabes.length;
+			var syllable = syllabes[Math.floor(Math.random() * count)];
+			if (tooFake(word, syllable)) continue;
+			word.push(syllable);
+		}
+
+		return word.join('');
+	};
+
+	window.onload = function() {
+		const word = getWord(0, 7);
+		document.getElementById("theWord").src=`image/${word}.jpg`;
+	}
+
+</script>
+
+<img id="theWord" src="">

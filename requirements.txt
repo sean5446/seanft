@@ -1,0 +1,4 @@
+trdg
+Flask
+requests
+gunicorn
