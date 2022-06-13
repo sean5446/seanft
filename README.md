@@ -2,4 +2,4 @@
 
 captcha as an NFT
 
-maade for use with Heroku
+made for use with Heroku
